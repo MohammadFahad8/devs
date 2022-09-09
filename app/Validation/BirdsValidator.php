@@ -10,6 +10,6 @@ class BirdsValidator
             'title' => 'Required|Min:4|Max:80|alpha_spaces',
             'body' => 'Required',
         ];
-        return Validator::make($input, $rules);
+        // return Validator::make($input, $rules);
     }
 }
