@@ -11,6 +11,7 @@ class BirdsController extends Controller
     public function __construct(repo $repo)
     {
         $this->repo = $repo;
+
     }
 
     public function edit($id = null)
