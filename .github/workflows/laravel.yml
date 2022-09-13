@@ -33,9 +33,9 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: php artisan
-    - uses: actions/checkout@v3
-    - name: Docker Build Push
-      uses: rossmaclean/docker-build-push-action@v0.0.15
+
+    - uses: rossmaclean/docker-build-push-action@v0.0.15
+      name: Docker Build Push
       with:
         image-name: mohammadfahadmfr/githubaction-mfr
         docker-user: ${{secrets.DOCKER_USERNAME}}
