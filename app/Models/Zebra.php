@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Contracts\BookContract;
 use Illuminate\Database\Eloquent\Model;
 
-class Zebra extends Model
+class Zebra extends Model implements BookContract
 {
-    
+
 
     /**
      * The database table used by the model.
@@ -38,15 +39,23 @@ class Zebra extends Model
      * @var array
      */
     protected $dates = [];
-    
+
     /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
     protected $casts = [];
-    
 
+    public function fetchAll()
+    {
+        return $this->paginate(29);
+    }
+
+    public function fetchById($id)
+    {
+
+    }
 
 
 }

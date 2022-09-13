@@ -23,7 +23,8 @@ class BooksController extends Controller
     public function __construct(BookContract $book_contract)
     {
         $this->post = $book_contract;
-
+        dd($this->post->fetchAll());
+        exit;
     }
     public function index()
     {

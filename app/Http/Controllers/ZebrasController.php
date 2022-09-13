@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Zebra;
 use Illuminate\Http\Request;
+use App\Contracts\BookContract;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redis;
 
@@ -16,6 +17,13 @@ class ZebrasController extends Controller
      *
      * @return \Illuminate\View\View
      */
+
+    public function __construct(BookContract $books)
+    {
+        $this->zebra = $books;
+        dd($this->zebra->fetchAll());
+
+    }
     public function index()
     {
         $storage = Redis::connection();
@@ -70,20 +78,18 @@ class ZebrasController extends Controller
     {
         $this->id = $id;
         $store = Redis::connection();
-        if($store->zScore('zebraViews','Zebra:'.$id))
-        {
-            $store->pipeline(function ($pipe){
-                $pipe->zIncrBy('zebraViews',1,'Zebra:'.$this->id);
-                $pipe->incr('zebra:'.$this->id.":views");
+        if ($store->zScore('zebraViews', 'Zebra:' . $id)) {
+            $store->pipeline(function ($pipe) {
+                $pipe->zIncrBy('zebraViews', 1, 'Zebra:' . $this->id);
+                $pipe->incr('zebra:' . $this->id . ":views");
 
             });
 
-        }else
-        {
-            $views = $store->incr('zebra:'.$this->id.'views');
-            $store->zIncrBy('zebraViews',$views,'Zebra:'.$this->id);
+        } else {
+            $views = $store->incr('zebra:' . $this->id . 'views');
+            $store->zIncrBy('zebraViews', $views, 'Zebra:' . $this->id);
         }
-        $view = $store->get('zebras'.$this->id.":views");
+        $view = $store->get('zebras' . $this->id . ":views");
         $zebra = Zebra::findOrFail($id);
         echo $view;
         return view('zebras.show', compact('zebra'));
@@ -99,7 +105,6 @@ class ZebrasController extends Controller
     public function edit($id)
     {
         $zebra = Zebra::findOrFail($id);
-
 
         return view('zebras.edit', compact('zebra'));
     }
@@ -152,7 +157,6 @@ class ZebrasController extends Controller
         }
     }
 
-
     /**
      * Get the request's data from the request.
      *
@@ -162,12 +166,11 @@ class ZebrasController extends Controller
     protected function getData(Request $request)
     {
         $rules = [
-                'title' => 'string|min:1|max:255|nullable',
+            'title' => 'string|min:1|max:255|nullable',
             'body' => 'string|min:1|nullable',
         ];
 
         $data = $request->validate($rules);
-
 
         return $data;
     }

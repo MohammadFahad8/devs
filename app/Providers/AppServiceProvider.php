@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Books;
+use App\Models\Zebra;
 use App\Contracts\BookContract;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,6 +27,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
-        $this->app->bind(BookContract::class, Books::class);
+        if($_SERVER['REQUEST_URI']=='/zebras/')
+        {
+            $this->app->bind(BookContract::class, Zebra::class);
+        }else
+        {
+            $this->app->bind(BookContract::class, Books::class);
+        }
     }
 }
