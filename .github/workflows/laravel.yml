@@ -16,6 +16,13 @@ jobs:
       with:
         php-version: '8.1.2'
     - uses: actions/checkout@v3
+    - uses: rossmaclean/docker-build-push-action@v0.0.15
+      name: Docker Build Push
+      with:
+        image-name: mohammadfahadmfr/githubaction-mfr
+        docker-user: ${{secrets.DOCKER_USERNAME}}
+        dockerhub-token: ${{secrets.DOCKER_PASSWORD}}
+        version: v0.0.15
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - name: Install Dependencies
@@ -33,11 +40,3 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: php artisan
-
-    - uses: rossmaclean/docker-build-push-action@v0.0.15
-      name: Docker Build Push
-      with:
-        image-name: mohammadfahadmfr/githubaction-mfr
-        docker-user: ${{secrets.DOCKER_USERNAME}}
-        dockerhub-token: ${{secrets.DOCKER_PASSWORD}}
-        version: v0.0.15
