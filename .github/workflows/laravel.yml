@@ -36,7 +36,7 @@ jobs:
     - name: Docker Build Push
       uses: rossmaclean/docker-build-push-action@v0.0.15
       with:
-        image: mohammadfahadmfr/githubaction-mfr
-        registry: docker.io
-        username: ${{secrets.DOCKER_USERNAME}}
-        password: ${{secrets.DOCKER_PASSWORD}}
+        image-name: mohammadfahadmfr/githubaction-mfr
+        docker-user: ${{secrets.DOCKER_USERNAME}}
+        dockerhub-token: ${{secrets.DOCKER_PASSWORD}}
+        version: v0.0.15
