@@ -13,7 +13,7 @@ return new class extends Migration
     public function up()
     {
         //
-        // DB::statement("CREATE INDEX title_fulltext_idx ON books USING gin(to_tsvector('english', title))");
+
     }
 
     /**
