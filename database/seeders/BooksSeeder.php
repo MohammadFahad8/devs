@@ -19,7 +19,7 @@ class BooksSeeder extends Seeder
         //
         $faker = Factory::create();
 
-        for ($i=0; $i < 50; $i++) {
+        for ($i=0; $i < 100; $i++) {
             DB::table('books')->insert([
                 'title' => $faker->sentence(1),
                 'body' => $faker->paragraph(1),

@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Cache;
 use App\Models\Books;
 use App\Traits\Authorize;
 use App\Jobs\ProcessBooks;
 use Illuminate\Http\Request;
+use App\Contracts\BookContract as BookContract;
 use App\Constants\StringConstants;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\BooksRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Session;
 // use Illuminate\Http\Request;
 
@@ -16,6 +20,11 @@ class BooksController extends Controller
 {
     use Authorize;
 
+    public function __construct(BookContract $book_contract)
+    {
+        $this->post = $book_contract;
+
+    }
     public function index()
     {
         //skinny controller example
@@ -28,6 +37,7 @@ class BooksController extends Controller
 
     public function create()
     {
+        $storage = Redis::connection();
         return view('books.create',[
             'book'=>1
         ]);
@@ -35,12 +45,21 @@ class BooksController extends Controller
 
     public function edit($id)
     {
+        dd(Auth::user()->id);
         Authorize::authorizeUser($id);
+        var_dump($this->fetchById($id));
              return view('books.edit',[
             'book'=>Books::find($id)
         ]);
 
 
+    }
+    public function show($id)
+    {
+        DB::connection()->enableQueryLog();
+        $books = $this->post->fetchAll();
+        $log= DB::getQueryLog();
+            print_r($log);
     }
 
     public function store(BooksRequest $request)

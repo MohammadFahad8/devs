@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<example-component></example-component>
     {{ Form::open(['route' => ['bookme.store'], 'class' => 'form-group']) }}
     <div class="row">
         <div class="col-md-6">

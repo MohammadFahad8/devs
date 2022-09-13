@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Birds;
+use GuzzleHttp\Psr7\Request;
 use App\Validation\BirdsValidator;
+use App\Http\Requests\BirdsRequest;
 use App\Repository\BirdsRepo as repo;
 
 class BirdsController extends Controller
@@ -11,6 +14,28 @@ class BirdsController extends Controller
     public function __construct(repo $repo)
     {
         $this->repo = $repo;
+    }
+
+    public function index()
+    {
+        return view('birds.index',
+        [
+            'birdsObjects'=>Birds::all()
+        ]);
+    }
+
+    public function create()
+    {
+        return view('birds.create');
+    }
+
+    public function store(BirdsRequest $request)
+    {
+        Birds::create($request->validated());
+        return view('birds.index',
+        [
+            'birdsObjects'=>Birds::paginate(4)
+        ]);
     }
 
     public function edit($id = null)

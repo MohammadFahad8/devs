@@ -23,7 +23,7 @@
             }
         </style>
     </head>
-    <body>
+    <body  >
     @yield('content')
     </body>
 </html>

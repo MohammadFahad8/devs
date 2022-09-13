@@ -1,15 +1,17 @@
 <?php
 
 namespace App\Models;
-
 use App\Scopes\AuthorScope;
 use App\Events\SendEmailAuthor;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use App\Contracts\BookContract as BookContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Books extends Model
+class Books extends Model implements BookContract
 {
     use HasFactory;
 
@@ -17,6 +19,11 @@ class Books extends Model
     protected $dispatchesEvents = [
         'created' => SendEmailAuthor::class,
     ];
+
+    public function __construct()
+    {
+        $this->storage = Redis::connection();
+    }
     //Global Scope
     // protected static function booted()
     // {
@@ -37,5 +44,18 @@ class Books extends Model
     public static function fatModel(): Collection
     {
         return Books::latest()->get();
+    }
+
+    public function fetchAll()
+    {
+        $results = Cache::remember("books_records_cache",1,function(){
+            return $this->get();
+          });
+          return $results;
+    }
+
+    public function fetchById($id)
+    {
+        return $this->find($id);
     }
 }

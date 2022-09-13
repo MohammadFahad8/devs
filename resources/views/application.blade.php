@@ -8,8 +8,11 @@
 
         <!-- Fonts -->
         <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-        <script src="{{ asset('js/app.js') }}" defer></script>
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <!-- <script src="{{ asset('js/app.js') }}" defer></script>
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
+        <link rel="stylesheet" href="{{ mix('css/app.css') }}" />
+<script defer src="{{ mix('js/app.js') }}"></script>
+
 
         <!-- Styles -->
         <style>
@@ -22,7 +25,8 @@
             }
         </style>
     </head>
-    <body>
+    <body id="app">
     @yield('content')
+
     </body>
 </html>

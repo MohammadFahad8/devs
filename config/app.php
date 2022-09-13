@@ -211,7 +211,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
-        'EntityManager' => LaravelDoctrine\ORM\Facades\EntityManager::class
+        'EntityManager' => LaravelDoctrine\ORM\Facades\EntityManager::class,
+        'Redis' => Illuminate\Support\Facades\Redis::class,
     ])->toArray(),
 
 ];

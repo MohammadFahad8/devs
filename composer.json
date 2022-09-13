@@ -15,9 +15,11 @@
         "laravel/ui": "^4.0",
         "laravelcollective/html": "^6.3",
         "nyholm/psr7": "^1.5",
+        "predis/predis": "^2.0",
         "symfony/psr-http-message-bridge": "^2.1"
     },
     "require-dev": {
+        "crestapps/laravel-code-generator": "^2.4",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.0.1",

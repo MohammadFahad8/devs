@@ -73,19 +73,6 @@
         </nav>
 
         <main class="py-4">
-        @if(Session::has('error'))
-<p class="alert alert-danger">{{ Session::get('error') }}</p>
-@endif
-                @if($errors->any())
-        <div class="alert-danger alert">
-        <ul>
-            @foreach($errors->all() as $error)
-            <li>{{$error}}</li>
-            @endforeach
-        </ul>
-
-        </div>
-        @endif
             @yield('content')
         </main>
     </div>
